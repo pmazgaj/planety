@@ -11,6 +11,19 @@ PROJECT_PATH = os.path.realpath(os.getcwd())
 CSV_PATH = os.path.join(PROJECT_PATH, 'csv')
 
 
+def get_all_values_for_column(file_all_values: list, column_name: str) -> list:
+    """
+    Get data for every single column
+    :param file_all_values: all elements in file
+    :param column_name: name of column to get
+    :return:
+    """
+    column = []
+    for element in file_all_values:
+        column.append(element.get(column_name, None))
+    return column
+
+
 def convert_currency(value: float, multiplier: float) -> float:
     """
     Multiply currency (value) by given multiplier
@@ -28,7 +41,7 @@ def save_csv_to_file():
         file.write('hejka')
 
 
-def parse_reader(reader: csv.DictReader):
+def parse_reader(reader: csv.DictReader) -> list:
     """
     Return list of all data sets in file
     :param reader:
@@ -55,13 +68,16 @@ def main():
     :return:
     """
     currencies = parse_csv('currencies.csv')
-    matches = parse_csv('matchings.csv')
-    data = parse_csv('data.csv')
+    # matches = parse_csv('matchings.csv')
+    # data = parse_csv('data.csv')
+
+    currencies_list = get_all_values_for_column(currencies, 'currency')
+    ratio_list = get_all_values_for_column(currencies, 'ratio')
+    print(currencies_list)
+    print(ratio_list)
 
     # save final results
     save_csv_to_file()
-
-    print(currencies, matches, data)
 
 
 if __name__ == "__main__":
