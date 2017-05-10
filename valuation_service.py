@@ -3,9 +3,7 @@ File for importing csv directly into models.
 Currently - for shop and category models.
 """
 import csv
-import sys
 import os
-import pprint as pp
 
 __author__ = "Przemek"
 
@@ -13,21 +11,21 @@ PROJECT_PATH = os.path.realpath(os.getcwd())
 CSV_PATH = os.path.join(PROJECT_PATH, 'csv')
 
 
-def convert_currency() -> int:
+def convert_currency(value: float, multiplier: float) -> float:
     """
-
+    Multiply currency (value) by given multiplier
     :return: converted integer number
     """
-    return int
+    return value * multiplier
 
 
-def save_csv():
+def save_csv_to_file():
     """
     Save results to file top_products
     :return:
     """
-    with open(os.path.join(CSV_PATH, 'top_products.csv'), mode='w+'):
-        print('writing')
+    with open(os.path.join(CSV_PATH, 'top_products.csv'), mode='w+') as file:
+        file.write('hejka')
 
 
 def parse_reader(reader: csv.DictReader):
@@ -48,8 +46,7 @@ def parse_csv(file: str) -> csv.DictReader:
 
     with open(os.path.join(CSV_PATH, file)) as file:
         reader = csv.DictReader(file)
-        parsed_data = parse_reader(reader)
-        return parsed_data
+        return parse_reader(reader)
 
 
 def main():
@@ -61,11 +58,10 @@ def main():
     matches = parse_csv('matchings.csv')
     data = parse_csv('data.csv')
 
-    # currencies = parse_reader(currencies)
-    # matches = parse_reader(matches)
-    # data = parse_reader(data)
+    # save final results
+    save_csv_to_file()
 
-    print(currencies)
+    print(currencies, matches, data)
 
 
 if __name__ == "__main__":
