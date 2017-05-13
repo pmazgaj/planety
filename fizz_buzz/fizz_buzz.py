@@ -5,7 +5,7 @@ Module to solve FizzBuzzChallenge
 
 def num_in_range(num: int) -> bool:
     """
-    :param num: integer to be checke  (if in range)
+    :param num: integer to be checked  (if in range)
     :return True if number in converted (int) number, 1 <= n < m < 10000, else False
     """
     return True if num in range(1, 10001) else False
