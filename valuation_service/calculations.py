@@ -14,11 +14,6 @@ def get_parsed_column(column: list) -> list:
     return [parse_num(x) for x in column]
 
 
-def parse_num(num: str) -> float:
-    """Get number from string, if incorrect - return 0"""
-    return int(num) if num.isdigit() else 0
-
-
 def get_average_value_for_column(column: list) -> float:
     """Return mean for column"""
     column = get_parsed_column(column)
@@ -54,5 +49,3 @@ def convert_currency(value: float, multiplier: float) -> float:
     column = get_parsed_column(column)
 
     return value * multiplier
-
-
