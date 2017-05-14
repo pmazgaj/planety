@@ -5,12 +5,21 @@ Handle main events for program
 from planety.valuation_service.models.matches import Matches
 from planety.valuation_service.models.currency import Currency
 from planety.valuation_service.models.data import Product
-from planety.valuation_service.file_handler import *
+from planety.valuation_service.file_handler import get_all_values_for_column,\
+    parse_csv, save_csv_to_file
+from planety.valuation_service.calculations import get_parsed_column
+
+# from planety.definitions import run_py_lint
 
 __author__ = "Przemek"
 
 
-def fill_product_object(data_file):
+def fill_product_object(data_file: list) -> list:
+    """
+    Fill product models for class Product
+    :param data_file: file got from data.csv
+    :return: list of Product objects
+    """
     data_objects = []
 
     for data in data_file:
@@ -24,7 +33,13 @@ def fill_product_object(data_file):
     return data_objects
 
 
-def fill_matches_object(matches_file):
+def fill_matches_object(matches_file: list) -> list:
+    """
+    Fill matches model for class Matches
+    :param matches_file: file got from matches.csv
+    :return: list of Matches objects
+    """
+
     data_objects = []
 
     for data in matches_file:
@@ -36,6 +51,11 @@ def fill_matches_object(matches_file):
 
 
 def fill_currency_object(currency_file):
+    """
+    Fill matches model for class Currency
+    :param currency_file: file got from currencies.csv
+    :return: list of Currency objects
+    """
     data_objects = []
 
     for data in currency_file:
@@ -47,6 +67,12 @@ def fill_currency_object(currency_file):
 
 
 def convert_currency(currencies: list, products: list):
+    """
+    Convert currency to pln by currency and ratio
+    :param currencies: list of currencies
+    :param products:
+    :return:
+    """
     for each_currency in currencies:
         for product in products:
             if each_currency.currency == product.currency:
@@ -54,46 +80,59 @@ def convert_currency(currencies: list, products: list):
 
 
 def get_key(custom):
+    """Allows to sort by an object property"""
     return custom.get_key()
 
 
-def limit_lists(products: list):
-    for product in products:
-        pass
-
-
-def compare_products_to_matches(products: list, matches: list):
-    value_1 = {}
-    value_2 = {}
-    value_3 = {}
+def create_dict_matching_products(matches_id: list) -> dict:
+    """
+    Create empty dictionary for matching ID's
+    :param matches_id:
+    :return:
+    """
+    max_id = max(matches_id)
     dictionary = {}
-    products_list = []
+    counter = 1
+    while counter <= max_id:
+        dictionary[counter] = []
+        counter += 1
+    return dictionary
+
+
+def compare_products_to_matches(products: list, matches: list, matches_id: list) -> dict:
+    """
+    Fill the dictionary, according to matching id
+    :param products:
+    :param matches:
+    :param matches_id:
+    :return: Dictionary for each matching id from matches.csv
+    """
+    dict_valid_products = create_dict_matching_products(matches_id)
     for product in products:
-        # print(product)
         for match in matches:
             m_id = match.matching_id
             p_id = product.matching_id
+            if m_id == p_id:
+                dict_valid_products[p_id].append(product)
 
-            products_list.append(product)
-            if m_id == p_id and m_id == 1:
-                limit = match.top_priced_count
-                if limit:
-                    # print(products_list[-1: limit + 1: -1])
-                    value_1.setdefault('valid', products_list[-1: -limit - 1: -1])
+    return dict_valid_products
 
-            if m_id == p_id and m_id == 2:
-                value_2.setdefault('valid', products_list[-1: -limit - 1: -1])
-            if m_id == p_id and m_id == 3:
-                value_3.setdefault('valid', products_list[-1: -limit - 1: -1])
 
-    print(value_1)
-    print(value_2)
-    print(value_3)
-    return value_3, value_2, value_1
-    # return dictionary
+def get_top_low_for_match(match_ids: dict) -> list:
+    """
+    Get top elements from dict for each key
+    :param match_ids:
+    :return:
+    """
+    for each_elem in match_ids:
+        pass
+    return list()
 
 
 def main():
+    """Main function to handle everything"""
+    # run_py_lint()
+
     data_file = parse_csv('data.csv')
     matches_file = parse_csv('matchings.csv')
     currencies_file = parse_csv('currencies.csv')
@@ -107,71 +146,14 @@ def main():
     # sorting original copy of list
     products.sort(key=get_key)
 
-    get_matched_lists = compare_products_to_matches(products, matches)
-    # print(get_matched_lists)
-    # print(products)
-    for product in products:
-        # print(product)
-        ...
-        # average =
+    matching_id_lists = get_parsed_column(get_all_values_for_column(matches_file, 'matching_id'))
+
+    get_matched_lists = compare_products_to_matches(products, matches, matching_id_lists)
+
+    get_top_low_for_match(get_matched_lists)
+
+    save_csv_to_file()
 
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # a = merge_columns(data_currency, data_price)
-    # print(a)
-    # print(a)
-    # print(data_currency)
-    # data_matching_id = get_all_values_for_column(data, 'matching_id')
-    # print(data_matching_id)
-    # matchings.csv
-    # matches = parse_csv('matchings.csv')
-    # matches_matching_id = get_all_values_for_column(matches, 'matching_id')
-    # matches_top_priced_count = get_all_values_for_column(matches, 'top_priced_count')
-    # print(matches)
-    # save final results
-
-    # grouped_columns = group_columns_by_param(matches, data)
-
-    # save_csv_to_file()
-
-    # # currency.csv
-    # currencies = parse_csv('currencies.csv')
-    # currency_currencies = get_all_values_for_column(currencies, 'currency')
-    # currency_ratio = get_all_values_for_column(currencies, 'ratio')
-    #
-    # # data.csv
-    # data = parse_csv('data.csv')
-    # # print(data)
-    # # data_id = get_all_values_for_column(data, 'id')
-    # data_quantity = get_all_values_for_column(data, 'quantity')
-    # data_price = get_all_values_for_column(data, 'price')
-    # data_price = multiply_two_lists(data_quantity, data_price)
-    # print(data)
-    # print(data_price)
-    # # print(data_price * data_quantity)
-    # # print(data_price)
-    # # print(data_price)
-    # data_currency = get_all_values_for_column(data, 'currency')

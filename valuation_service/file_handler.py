@@ -2,7 +2,8 @@
 Handle *.csv files module
 """
 import csv
-from planety.definitions import *
+import os
+from planety.definitions import CSV_PATH
 
 __author__ = "Przemek"
 
@@ -50,8 +51,6 @@ def parse_csv(file: str) -> list:
         return parse_reader(reader)
 
 
-def merge_columns(list1: list, list2: list) -> dict:
-    """Create merger of few lists"""
-    return dict(zip(list1, list2))
+
 
 
