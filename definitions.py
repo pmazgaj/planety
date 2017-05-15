@@ -1,5 +1,5 @@
 """
-Definitions for entire project
+Definitions for entire project - path of project plus path of csv folder
 """
 import os
 from pylint.lint import Run
