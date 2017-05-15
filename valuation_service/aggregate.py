@@ -1,5 +1,3 @@
-
-
 def get_key(custom):
     """
     Allows to sort by an object property
@@ -35,23 +33,40 @@ def compare_products_to_matches(products: list, matches: list, matches_id: list)
     :param matches_id:
     :return: Dictionary for each matching id from matches.csv
     """
-    dict_valid_products = create_dict_matching_products(matches_id)
-    for product in products:
-        for match in matches:
-            m_id = match.matching_id
+    valid_products = create_dict_matching_products(matches_id)
+
+    for match in matches:
+        m_id = match.matching_id
+        for product in products:
             p_id = product.matching_id
             if m_id == p_id:
-                dict_valid_products[p_id].append(product)
+                valid_products[p_id].append(product)
 
-    return dict_valid_products
+    return valid_products
 
 
-def get_top_low_for_match(match_ids: dict) -> list:
+def get_top_low_for_match(valid_products: dict, matches: list) -> list:
     """
     Get top elements from dict for each key
-    :param match_ids:
+    :param valid_products:
+    :param matches:
     :return:
     """
-    for each_elem in match_ids:
-        pass
-    return list()
+    m_dict = {}
+    over_limit = []
+    under_limit = []
+
+    for match in matches:
+        m_id = match.matching_id
+        m_top_priced_count = match.top_priced_count
+        m_dict[m_id] = m_top_priced_count
+
+    for key in valid_products.keys():
+        if key in m_dict.keys():
+
+            over_limit.append(valid_products[key][-1:-(m_dict[key]+1):-1])
+            under_limit.append(valid_products[key][0])
+
+    print(over_limit)
+    print(under_limit)
+    return valid_products

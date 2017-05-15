@@ -31,8 +31,8 @@ def main():
     matching_id_lists = get_parsed_column(get_all_values_for_column(matches_file, 'matching_id'))
     get_matched_lists = compare_products_to_matches(products, matches, matching_id_lists)
 
-    get_top_low_for_match(get_matched_lists)
-
+    get_top_low_for_match(get_matched_lists, matches)
+    # print(a)
     save_csv_to_file()
 
 

@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from planety.valuation_service.aggregate import get_key, create_dict_matching_products, compare_products_to_matches, \
+from assingment.valuation_service.aggregate import get_key, create_dict_matching_products, compare_products_to_matches, \
     get_top_low_for_match
-from planety.valuation_service.models.matches import Matches
-from planety.valuation_service.models.product import Product
+from assingment.valuation_service.models.matches import Matches
+from assingment.valuation_service.models.product import Product
 
 
 class TestAggregate(TestCase):

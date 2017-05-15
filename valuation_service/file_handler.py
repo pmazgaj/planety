@@ -61,7 +61,6 @@ def fill_product_object(data_file: list) -> list:
     :return: list of Product objects
     """
     data_objects = []
-
     for data in data_file:
         obj_id = data['id']
         price = data['price']

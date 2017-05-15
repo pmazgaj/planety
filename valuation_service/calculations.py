@@ -11,7 +11,7 @@ def get_parsed_column(column: list) -> list:
     :param column: 
     :return: 
     """
-    return [parse_num(x) for x in column]
+    return [parse_num_to_int(x) for x in column]
 
 
 def get_average_value_for_column(column: list) -> float:
@@ -26,9 +26,9 @@ def get_sum_for_column(column: list) -> float:
     return sum(column)
 
 
-def parse_num(num: str) -> float:
+def parse_num_to_int(num: str) -> int:
     """Get number from string, if incorrect - return 0"""
-    return float(num) if num.isdigit() else 0.0
+    return int(num) if num.isdigit() else 0.0
 
 
 def convert_currency(currencies: list, products: list):

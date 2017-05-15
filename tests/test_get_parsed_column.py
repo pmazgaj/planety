@@ -1,6 +1,6 @@
 from unittest import TestCase
-from planety.valuation_service.calculations import get_parsed_column, get_sum_for_column, parse_num
-from planety.valuation_service.calculations import get_average_value_for_column
+from assingment.valuation_service.calculations import get_parsed_column, get_sum_for_column, parse_num
+from assingment.valuation_service.calculations import get_average_value_for_column
 
 
 class TestCalculations(TestCase):

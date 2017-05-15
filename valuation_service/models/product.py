@@ -38,3 +38,6 @@ class Product:
 
         # def __repr__(self):
         #     return "{}".format(self.converted_total_price)
+
+    def __repr__(self):
+        return "{}".format(self.converted_total_price)
