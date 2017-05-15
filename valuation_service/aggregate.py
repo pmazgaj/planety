@@ -16,9 +16,11 @@ def create_dict_matching_products(matches_id: list) -> dict:
     :param matches_id:
     :return:
     """
+
     max_id = max(matches_id)
     dictionary = {}
     counter = 1
+
     while counter <= max_id:
         dictionary[counter] = []
         counter += 1

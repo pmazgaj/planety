@@ -33,7 +33,7 @@ def save_csv_to_file():
         file.write('hejka')
 
 
-def parse_reader(reader: csv.DictReader) -> list:
+def parse_reader(reader: list) -> list:
     """
     Return list of all data sets in file
     :param reader:
