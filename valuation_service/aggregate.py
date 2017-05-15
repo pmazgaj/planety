@@ -45,17 +45,17 @@ def compare_products_to_matches(products: list, matches: list, matches_id: list)
     return valid_products
 
 
-def get_top_low_for_match(valid_products: dict, matches: list) -> list:
+def get_top_low_for_match(valid_products: dict, matches: list) -> dict:
     """
-    Get top elements from dict for each key
+    Get top and low products (by limit from matchings.csv)
     :param valid_products:
     :param matches:
-    :return:
+    :return: dict of over and under limits
     """
+
     m_dict = {}
     over_limit = []
-    under_limit = []
-
+    all_objects = []
     for match in matches:
         m_id = match.matching_id
         m_top_priced_count = match.top_priced_count
@@ -63,10 +63,27 @@ def get_top_low_for_match(valid_products: dict, matches: list) -> list:
 
     for key in valid_products.keys():
         if key in m_dict.keys():
+            all_objects.append(valid_products[key])
+            over_limit.append(valid_products[key][-1:-(m_dict[key] + 1):-1])
 
-            over_limit.append(valid_products[key][-1:-(m_dict[key]+1):-1])
-            under_limit.append(valid_products[key][0])
+    # lists of elements filtered by matching id
+    over_limit = [item for sublist in over_limit for item in sublist]
+    all_objects = [item for sublist in all_objects for item in sublist]
+    under_limit = [item for item in all_objects if item not in over_limit]
 
-    print(over_limit)
-    print(under_limit)
-    return valid_products
+    return {'over_limit': over_limit, 'under_limit': under_limit}
+
+
+def get_sum_avg_for_match(get_matched_dict: dict):
+    """
+    Return dictionary with avg sum and value for given matched id.
+    :param get_matched_dict: 
+    :return: 
+    """
+    dictionary = {}
+    value = 0
+    for x in get_matched_dict:
+        for y in get_matched_dict[x]:
+            value += y.converted_total_price
+            dictionary[x] = {'avg_price': value/len(get_matched_dict[x]), 'total_price': value}
+    return dictionary

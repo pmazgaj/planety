@@ -24,16 +24,7 @@ def get_all_values_for_column(file_all_values: list, column_header: str) -> list
     return column
 
 
-def save_csv_to_file():
-    """
-    Save results to file top_products
-    :return:
-    """
-    with open(os.path.join(CSV_PATH, 'top_products.csv'), mode='w+') as file:
-        file.write('hejka')
-
-
-def parse_reader(reader: list) -> list:
+def parse_reader(reader: csv.DictReader) -> list:
     """
     Return list of all data sets in file
     :param reader:
@@ -103,3 +94,14 @@ def fill_currency_object(currency_file):
 
         data_objects.append(Currency(currency, ratio))
     return data_objects
+
+
+def save_csv_to_file():
+    """
+    Save results to file top_products
+    :return:
+    """
+    with open(os.path.join(CSV_PATH, 'top_products.csv'), mode='w+') as file:
+        writer = csv.writer(file)
+        headers = [['matching_id', 'total_price', 'avg_price', 'currency', 'ignored_products_count']]
+        writer.writerows(headers)
