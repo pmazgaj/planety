@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from assingment.valuation_service.aggregate import get_key, create_dict_matching_products, compare_products_to_matches, \
+from planety.valuation_service.aggregate import get_key, create_dict_matching_products, compare_products_to_matches, \
     get_top_low_for_match
-from assingment.valuation_service.models.matches import Matches
-from assingment.valuation_service.models.product import Product
+from planety.valuation_service.models.matches import Matches
+from planety.valuation_service.models.product import Product
 
 
 class TestAggregate(TestCase):
@@ -20,4 +20,4 @@ class TestAggregate(TestCase):
 
     def test_get_top_low_for_match(self):
         """Tests for create dict matching products"""
-        self.assertIsInstance(get_top_low_for_match({}), list)
+        self.assertIsInstance(get_top_low_for_match({}, []), dict)

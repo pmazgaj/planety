@@ -1,6 +1,6 @@
 from unittest import TestCase
-from assingment.valuation_service.calculations import get_parsed_column, get_sum_for_column, parse_num
-from assingment.valuation_service.calculations import get_average_value_for_column
+from planety.valuation_service.calculations import get_parsed_column, get_sum_for_column, parse_num_to_int
+from planety.valuation_service.calculations import get_average_value_for_column
 
 
 class TestCalculations(TestCase):
@@ -15,5 +15,5 @@ class TestCalculations(TestCase):
         self.assertNotEqual(get_sum_for_column([1, 2.0, 3.0]), int)
 
     def test_parse_num(self):
-        self.assertNotEqual(parse_num('x'), 1)
-        self.assertIsInstance(parse_num('dummy'), float)
+        self.assertNotEqual(parse_num_to_int('x'), 1)
+        self.assertIsInstance(parse_num_to_int('dummy'), float)

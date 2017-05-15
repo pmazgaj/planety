@@ -1,9 +1,9 @@
 from unittest import TestCase
-from assingment.valuation_service.file_handler import get_all_values_for_column, fill_product_object, fill_matches_object, \
+from planety.valuation_service.file_handler import get_all_values_for_column, fill_product_object, fill_matches_object, \
     fill_currency_object
-from assingment.valuation_service.file_handler import parse_csv
-from assingment.valuation_service.file_handler import parse_reader
-from assingment.valuation_service.file_handler import save_csv_to_file
+from planety.valuation_service.file_handler import parse_csv
+from planety.valuation_service.file_handler import parse_reader
+from planety.valuation_service.file_handler import save_csv_to_file
 
 
 class TestFileHandler(TestCase):
