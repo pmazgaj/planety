@@ -8,7 +8,7 @@ __author__ = "Przemek"
 class Matches:
     """Model for matches (from csv files)"""
 
-    def __init__(self, matching_id, top_priced_count):
+    def __init__(self, matching_id: str, top_priced_count: str):
         self.matching_id = int(matching_id)
         self.top_priced_count = int(top_priced_count)
 

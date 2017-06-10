@@ -8,7 +8,7 @@ __author__ = "Przemek"
 class Currency:
     """Model for currency (from csv files)"""
 
-    def __init__(self, currency, ratio):
+    def __init__(self, currency: str, ratio: str):
         self.currency = currency
         self.ratio = float(ratio) if ratio.lstrip('-').replace('.', '', 1).isdigit() else 1.0
 

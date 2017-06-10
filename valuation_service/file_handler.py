@@ -96,12 +96,26 @@ def fill_currency_object(currency_file):
     return data_objects
 
 
-def save_csv_to_file():
+def save_csv_to_file(top_low_dict: dict, sum_avg_dict: dict):
     """
     Save results to file top_products
     :return:
     """
+    under_limit = top_low_dict['under_limit']
+    # print(sum_avg_dict)
+    # print(under_limit)
+    cnt_a = 0
+
+    for product in under_limit:
+        for key in sum_avg_dict.keys():
+            if key == product.prod_id:
+                cnt_a += 1
+                sum_avg_dict[key]['ignored_products_count'] = cnt_a
     with open(os.path.join(CSV_PATH, 'top_products.csv'), mode='w+') as file:
-        writer = csv.writer(file)
-        headers = [['matching_id', 'total_price', 'avg_price', 'currency', 'ignored_products_count']]
-        writer.writerows(headers)
+        writer = csv.DictWriter(file, ['matching_id', 'total_price', 'avg_price', 'currency', 'ignored_products_count'])
+        writer.writeheader()
+        for x, row in enumerate(sum_avg_dict):
+            writer.writerow(sum_avg_dict[row])
+
+
+

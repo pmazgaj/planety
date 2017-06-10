@@ -82,8 +82,13 @@ def get_sum_avg_for_match(get_matched_dict: dict):
     """
     dictionary = {}
     value = 0
+    counter = 0
+    # print(get_matched_dict)
+    for obj in get_matched_dict:
+        counter += obj
+    # print(counter)
     for x in get_matched_dict:
         for y in get_matched_dict[x]:
             value += y.converted_total_price
-            dictionary[x] = {'avg_price': value/len(get_matched_dict[x]), 'total_price': value}
+            dictionary[x] = {'matching_id': x, 'avg_price': value/len(get_matched_dict[x]), 'total_price': value}
     return dictionary

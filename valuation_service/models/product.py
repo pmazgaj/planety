@@ -8,7 +8,7 @@ __author__ = "Przemek"
 class Product:
     """Model for product (from csv files)"""
 
-    def __init__(self, prod_id, price, currency, quantity, matching_id):
+    def __init__(self, prod_id: str, price: str, currency: str, quantity: str, matching_id: str):
         self.prod_id = int(prod_id)
         self.price = float(price) if price.lstrip('-'). \
             replace('.', '', 1).isdigit() else 1.0
@@ -28,13 +28,16 @@ class Product:
                     self.total_price,
                     self.converted_total_price)
 
-    def __cmp__(self, other):
+    def __cmp__(self, other: str):
         if hasattr(other, 'total_price'):
             return self.total_price.__cmp__(other.total_price)
 
     def get_key(self):
         """Get key for user-defined sort"""
         return self.converted_total_price
-
-    def __repr__(self):
-        return "{}".format(self.converted_total_price)
+    #
+    # def __repr__(self):
+    #     return "{}{}{}{}{}{}{}".format(self.prod_id,
+    #                                    self.price, self.currency,
+    #                                    self.quantity, self.matching_id,
+    #                                    self.total_price, self.converted_total_price)
