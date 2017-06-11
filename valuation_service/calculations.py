@@ -30,7 +30,7 @@ def parse_num_to_int(num: str) -> float:
     return int(num) if num.isdigit() else 0.0
 
 
-def convert_currency(currencies: list, products: list):
+def convert_currency(currencies: list, products: list) -> None:
     """
     Convert currency to pln by currency and ratio
     :param currencies: list of currencies

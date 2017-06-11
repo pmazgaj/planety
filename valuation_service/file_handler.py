@@ -1,5 +1,5 @@
 """
-Handle *.csv files module
+Handle *.csv files module, save results
 """
 import csv
 import os
@@ -80,7 +80,7 @@ def fill_matches_object(matches_file: list) -> list:
     return data_objects
 
 
-def fill_currency_object(currency_file):
+def fill_currency_object(currency_file: list):
     """
     Fill matches model for class Currency
     :param currency_file: file got from currencies.csv
@@ -96,21 +96,31 @@ def fill_currency_object(currency_file):
     return data_objects
 
 
-def save_csv_to_file(top_low_dict: dict, sum_avg_dict: dict):
+def sum_ignored_products(product: Product, sum_avg_dict: dict) -> None:
+    """
+    Add ignored_counts number into dict (written into file)
+    :param product: single product from under_limit list
+    :param sum_avg_dict: Dictionary to set a 
+    :return: 
+    """
+    counter = 0
+    for _ in range(1, len(sum_avg_dict) + 1):
+
+        if product.prod_id == _ and product.prod_id in sum_avg_dict.keys():
+            counter += 1
+            sum_avg_dict[_]['ignored_products_count'] = counter
+
+
+def save_csv_to_file(sum_avg_dict: dict, under_limit: list) -> None:
     """
     Save results to file top_products
-    :return:
+    :param sum_avg_dict: 
+    :param under_limit: 
+    :return: 
     """
-    under_limit = top_low_dict['under_limit']
-    # print(sum_avg_dict)
-    # print(under_limit)
-    cnt_a = 0
 
     for product in under_limit:
-        for key in sum_avg_dict.keys():
-            if key == product.prod_id:
-                cnt_a += 1
-                sum_avg_dict[key]['ignored_products_count'] = cnt_a
+        sum_ignored_products(product=product, sum_avg_dict=sum_avg_dict)
     with open(os.path.join(CSV_PATH, 'top_products.csv'), mode='w+') as file:
         writer = csv.DictWriter(file, ['matching_id', 'total_price', 'avg_price', 'currency', 'ignored_products_count'])
         writer.writeheader()
